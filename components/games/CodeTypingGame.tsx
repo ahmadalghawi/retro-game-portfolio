@@ -206,7 +206,7 @@ export const CodeTypingGame = ({ onScoreUpdate, onGameComplete }: CodeTypingGame
           <span className="text-[#00ff00]">Accuracy: {accuracy}%</span>
         </div>
         <div className="pixel-border-sm p-2 bg-black">
-          <span className="text-[#00ff00]">Level: {currentLevel}</span>
+          <span className="text-[#ff0000]">Errors: {errors}</span>
         </div>
       </div>
 

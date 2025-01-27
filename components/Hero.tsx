@@ -453,7 +453,7 @@ const Hero = () => {
               repeatDelay: 0
             }}
             onUpdate={(latest) => {
-              planeX.set(latest.x);
+              planeX.set(String(latest.x));
             }}
           >
             <div 

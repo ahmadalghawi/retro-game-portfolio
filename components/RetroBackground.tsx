@@ -20,28 +20,28 @@ const RetroBackground = () => {
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        type: 'star',
+        type: 'star' as const,
         direction: Math.random() * 2 - 1
       })),
       ...Array(3).fill(null).map((_, i) => ({
         id: i + 15,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        type: 'spaceship',
+        type: 'spaceship' as const,
         direction: Math.random() * 2 - 1
       })),
       ...Array(2).fill(null).map((_, i) => ({
         id: i + 18,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        type: 'alien',
+        type: 'alien' as const,
         direction: Math.random() * 2 - 1
       })),
       ...Array(4).fill(null).map((_, i) => ({
         id: i + 20,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        type: 'asteroid',
+        type: 'asteroid' as const,
         direction: Math.random() * 2 - 1
       }))
     ];

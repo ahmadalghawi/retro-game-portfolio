@@ -88,18 +88,13 @@ const skillsData: Skill[] = [
   },
 ];
 
-interface GameStats {
-  totalClicks: number;
-  maxCombo: number;
-  timePlayed: number;
-  startTime: number;
-}
-
 interface GameState {
   totalClicks: number;
   maxCombo: number;
   timePlayed: number;
   startTime: number;
+  level: number;
+  experience: number;
   powerUps: {
     doubleExp: boolean;
     comboExtender: boolean;
@@ -126,7 +121,6 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
   const [skills, setSkills] = useState(skillsData);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [showAttackEffect, setShowAttackEffect] = useState(false);
   const [currentAttack, setCurrentAttack] = useState<{
     type: 'fire' | 'lightning' | 'blizzard' | 'rock';
     x: number;
@@ -151,6 +145,8 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
     maxCombo: 0,
     timePlayed: 0,
     startTime: Date.now(),
+    level: 1,
+    experience: 0,
     powerUps: {
       doubleExp: false,
       comboExtender: false,
@@ -421,6 +417,8 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
       maxCombo: 0,
       timePlayed: 0,
       startTime: Date.now(),
+      level: 1,
+      experience: 0,
       powerUps: {
         doubleExp: false,
         comboExtender: false,
@@ -706,7 +704,7 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
               <div>
                 <h4 className="text-[#00ff00] pixel-text mb-2">Achievements</h4>
                 <ul className="text-[#00ff00] text-sm">
-                  {selectedSkill.achievements.map((achievement, index) => (
+                  {selectedSkill.achievements.map((achievement) => (
                     <li 
                       key={achievement}
                       className={`${unlockedAchievements.includes(achievement) ? 'text-[#00ff00]' : 'text-gray-600'}`}

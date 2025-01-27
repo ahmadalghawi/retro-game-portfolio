@@ -3,13 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 const ContactInterface = ({ onClose }: { onClose: () => void }) => {
-  const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-  const [typing, setTyping] = useState('');
+  // const [typing, setTyping] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,15 +19,15 @@ const ContactInterface = ({ onClose }: { onClose: () => void }) => {
     }, 3000);
   };
 
-  const typewriterEffect = (text: string) => {
-    let index = 0;
-    setTyping('');
-    const interval = setInterval(() => {
-      setTyping((prev) => prev + text[index]);
-      index++;
-      if (index === text.length) clearInterval(interval);
-    }, 50);
-  };
+  // const typewriterEffect = (text: string) => {
+  //   let index = 0;
+  //   setTyping('');
+  //   const interval = setInterval(() => {
+  //     setTyping((prev) => prev + text[index]);
+  //     index++;
+  //     if (index === text.length) clearInterval(interval);
+  //   }, 50);
+  // };
 
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/ahmadalghawi' },
@@ -121,7 +120,7 @@ const ContactInterface = ({ onClose }: { onClose: () => void }) => {
                   <div>
                     <h3 className="text-[#00ff00] pixel-text mb-4">QUICK CONNECT:</h3>
                     <div className="space-y-4">
-                      {socialLinks.map((link, index) => (
+                      {socialLinks.map((link) => (
                         <motion.a
                           key={link.name}
                           href={link.url}

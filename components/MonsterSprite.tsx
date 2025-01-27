@@ -112,7 +112,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
       duration: isHovered ? 0.8 : 0.3,
       ease: "easeInOut",
       repeat: isHovered ? Infinity : 0,
-      repeatType: "reverse"
+      repeatType: "reverse" as const
     }
   };
 
@@ -125,7 +125,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
     transition: {
       duration: 0.4,
       repeat: isHovered ? Infinity : 0,
-      repeatType: "reverse"
+      repeatType: "reverse" as const
     }
   };
 
@@ -160,8 +160,10 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
     >
       <motion.div 
         className="w-32 h-32 relative"
-        animate={glowAnimation}
-        animate={defeatedAnimation}
+        animate={{
+          ...glowAnimation,
+          ...defeatedAnimation
+        }}
       >
         {/* Particle effects */}
         {particles.map((particle) => (
@@ -244,7 +246,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
               animate={{
                 fillOpacity: isHovered ? [0.3, 0.6] : 0.3
               }}
-              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" as const }}
             />
           </g>
 
@@ -266,7 +268,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
                   duration: 0.8,
                   delay: i * 0.15,
                   repeat: Infinity,
-                  repeatType: "reverse"
+                  repeatType: "reverse" as const
                 }}
               />
             ))}

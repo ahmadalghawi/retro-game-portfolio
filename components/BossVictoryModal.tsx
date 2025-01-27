@@ -1,11 +1,12 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface BossVictoryModalProps {
   stats: {
     timePassed: number;
     maxCombo: number;
     totalClicks: number;
+    damageDealt: number;
   };
   onClose: () => void;
 }
@@ -123,6 +124,16 @@ const BossVictoryModal = ({ stats, onClose }: BossVictoryModalProps) => {
           >
             <span className="text-[#ff00ff]">🎯 Total Hits:</span>
             <span className="text-[#ff00ff]">{stats.totalClicks}</span>
+          </motion.div>
+
+          <motion.div
+            className="flex items-center justify-between pixel-text text-xl"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <span className="text-[#ff0000]">💥 Damage Dealt:</span>
+            <span className="text-[#ff0000]">{stats.damageDealt}</span>
           </motion.div>
         </div>
 
