@@ -84,7 +84,8 @@ const GameModeSelect = ({ isVisible, onSelect }: GameModeSelectProps) => {
                 }}
                 transition={{
                   duration: 2,
-                  repeat: Infinity,
+                  repeat: -1,
+                  repeatType: "reverse" as const
                 }}
               >
                 Click a mode to begin your journey

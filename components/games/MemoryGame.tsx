@@ -78,7 +78,7 @@ export const MemoryGame = ({ onScoreUpdate, onGameComplete }: MemoryGameProps) =
       const firstCard = cards.find(card => card.id === flippedCards[0]);
       const secondCard = cards.find(card => card.id === cardId);
 
-      if (firstCard?.tech === secondCard?.tech) {
+      if (firstCard && secondCard && firstCard.tech === secondCard.tech) {
         // Match found
         setTimeout(() => {
           setCards(cards.map(card => 

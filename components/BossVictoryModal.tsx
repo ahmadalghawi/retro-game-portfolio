@@ -7,6 +7,7 @@ interface BossVictoryModalProps {
     maxCombo: number;
     totalClicks: number;
     damageDealt: number;
+
   };
   onClose: () => void;
 }

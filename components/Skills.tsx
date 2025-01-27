@@ -44,9 +44,9 @@ export default function Skills() {
     incrementCombo();
     setComboCount(prev => prev + 1);
 
-    // Random chance to trigger power-up (15%)
-    if (Math.random() < 0.15) {
-      const powerUpTypes = Object.keys(powerUps);
+    // Random chance to trigger power-up (25%)
+    if (Math.random() < 0.25) {
+      const powerUpTypes = Object.keys(powerUps) as Array<keyof typeof powerUps>;
       const randomPowerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
       setPowerUp(randomPowerUp);
     }

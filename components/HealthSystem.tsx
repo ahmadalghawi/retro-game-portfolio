@@ -37,8 +37,8 @@ const HealthSystem = ({ currentHP, maxHP, shield, isBoss = false }: HealthSystem
           transition={{
             opacity: {
               duration: 0.5,
-              repeat: Infinity,
-              repeatType: "reverse",
+              repeat: -1,
+              repeatType: "reverse" as const,
             },
           }}
         />
@@ -58,8 +58,8 @@ const HealthSystem = ({ currentHP, maxHP, shield, isBoss = false }: HealthSystem
             }}
             transition={{
               duration: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
+              repeat: -1,
+              repeatType: "reverse" as const,
             }}
           />
         )}

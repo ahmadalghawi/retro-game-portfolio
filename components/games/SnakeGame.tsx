@@ -176,7 +176,7 @@ export const SnakeGame = ({ onScoreUpdate, onGameComplete }: SnakeGameProps) => 
           className="absolute bg-[#ff00ff]"
           initial={{ scale: 0 }}
           animate={{ scale: [1, 1.2, 1], opacity: [1, 0.8, 1] }}
-          transition={{ repeat: Infinity, duration: 1 }}
+          transition={{ repeat: -1, duration: 1 }}
           style={{
             width: CELL_SIZE - 2,
             height: CELL_SIZE - 2,

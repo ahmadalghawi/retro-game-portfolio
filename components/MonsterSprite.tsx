@@ -126,6 +126,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
       duration: 0.4,
       repeat: isHovered ? Infinity : 0,
       repeatType: "reverse" as const
+
     }
   };
 
@@ -135,23 +136,28 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
   };
 
   const defeatedAnimation = {
-    filter: isDefeated 
-      ? [
-          'grayscale(100%)',
-          'blur(2px)',
-          'brightness(0.7)'
-        ].join(' ')
-      : 'none',
-    opacity: isDefeated ? 0.5 : 1,
+    opacity: 0,
+    scale: 0,
     transition: {
-      duration: 0.4,
+      duration: 0.5,
+      ease: "easeInOut"
     }
   };
 
   return (
     <motion.div
       className="absolute inset-0 flex items-center justify-center"
-      animate={bounceAnimation}
+      variants={variants}
+      initial="idle"
+      animate={
+        isDefeated
+          ? "defeated"
+          : isAttacking
+          ? "attack"
+          : isHovered
+          ? "hover"
+          : "idle"
+      }
       whileTap={{ scale: 0.9 }}
       onClick={() => {
         setIsAttacking(true);
@@ -188,23 +194,21 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            {[...Array(3)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 rounded-full"
+                className="absolute w-1 h-4 bg-current"
                 style={{
-                  background: color,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
+                  transform: `rotate(${(360 / 8) * i}deg)`,
+                  transformOrigin: 'center bottom',
                 }}
                 animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.8, 0.3, 0.8],
+                  y: [-2, 2],
                 }}
                 transition={{
                   duration: 1,
-                  delay: i * 0.2,
-                  repeat: Infinity,
+                  repeat: -1,
+                  repeatType: "reverse" as const
                 }}
               />
             ))}
