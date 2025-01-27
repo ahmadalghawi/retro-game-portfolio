@@ -6,6 +6,7 @@ interface BossVictoryModalProps {
     timePassed: number;
     maxCombo: number;
     totalClicks: number;
+    damageDealt?: number;
   };
   onClose: () => void;
 }

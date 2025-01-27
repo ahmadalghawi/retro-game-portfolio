@@ -96,6 +96,8 @@ interface GameStats {
 }
 
 interface GameState {
+  level: number;
+  experience: number;
   totalClicks: number;
   maxCombo: number;
   timePlayed: number;
@@ -147,6 +149,8 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
   const [showWelcome, setShowWelcome] = useState(false);
   const [showModeSelect, setShowModeSelect] = useState(true);
   const [gameState, setGameState] = useState<GameState>({
+    level: 1,
+    experience: 0,
     totalClicks: 0,
     maxCombo: 0,
     timePlayed: 0,
@@ -417,6 +421,8 @@ const GameInterface = ({ onClose }: { onClose: () => void }) => {
     setCurrentAttack(null);
     setLevelUpSkills(new Set());
     setGameState({
+      level: 1,
+      experience: 0,
       totalClicks: 0,
       maxCombo: 0,
       timePlayed: 0,

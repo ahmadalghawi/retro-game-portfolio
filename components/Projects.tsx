@@ -7,7 +7,7 @@ import { useXP } from '../context/XPContext';
 
 interface ProjectCardProps {
   project: {
-    id: string;
+    id: number;
     title: string;
     description: string;
     image: string;
@@ -36,22 +36,29 @@ const ProjectCard = ({ project, index, isSelected }: ProjectCardProps) => {
     });
   };
 
+  const variants = {
+    initial: {
+      scale: 1,
+      filter: 'brightness(1)'
+    },
+    selected: {
+      scale: 1.05,
+      filter: 'brightness(1.2)',
+      transition: {
+        duration: 2,
+        repeat: -1,
+        repeatType: "reverse" as const
+      }
+    }
+  };
+
   return (
-    <div 
-      className="h-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onDoubleClick={handleDoubleClick}
-    >
-      <motion.div 
-        className={`pixel-border bg-black p-4 relative overflow-hidden h-full flex flex-col transition-all duration-300 ${
-          isSelected ? 'scale-105' : ''
-        }`}
-        whileHover={{ scale: 1.02 }}
-        animate={isSelected ? {
-          y: [0, -5, 0],
-          transition: { duration: 2, repeat: Infinity }
-        } : {}}
+    <div className="relative">
+      <motion.div
+        className="relative"
+        variants={variants}
+        initial="initial"
+        animate={isSelected ? "selected" : "initial"}
       >
         {/* Achievement Badge */}
         {clickCount > 0 && (
@@ -172,22 +179,22 @@ const ProjectCard = ({ project, index, isSelected }: ProjectCardProps) => {
         <motion.div
           className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-[#00ff00]"
           animate={isHovered ? { scale: [1, 1.5, 1], rotate: [0, 90, 0] } : {}}
-          transition={{ duration: 1, repeat: Infinity }}
+          transition={{ duration: 1, repeat: -1 }}
         />
         <motion.div
           className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-[#00ff00]"
           animate={isHovered ? { scale: [1, 1.5, 1], rotate: [0, -90, 0] } : {}}
-          transition={{ duration: 1, repeat: Infinity }}
+          transition={{ duration: 1, repeat: -1 }}
         />
         <motion.div
           className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-[#00ff00]"
           animate={isHovered ? { scale: [1, 1.5, 1], rotate: [0, 90, 0] } : {}}
-          transition={{ duration: 1, repeat: Infinity }}
+          transition={{ duration: 1, repeat: -1 }}
         />
         <motion.div
           className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-[#00ff00]"
           animate={isHovered ? { scale: [1, 1.5, 1], rotate: [0, -90, 0] } : {}}
-          transition={{ duration: 1, repeat: Infinity }}
+          transition={{ duration: 1, repeat: -1 }}
         />
 
         {/* Power-up Spawn Points */}
@@ -196,12 +203,12 @@ const ProjectCard = ({ project, index, isSelected }: ProjectCardProps) => {
             <motion.div
               className="absolute top-1/2 left-0 w-2 h-2 bg-[#ff00ff]"
               animate={{ x: ['0%', '2000%'], opacity: [1, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 2, repeat: -1 }}
             />
             <motion.div
               className="absolute top-1/2 right-0 w-2 h-2 bg-[#00ff00]"
               animate={{ x: ['0%', '-2000%'], opacity: [1, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 2, repeat: -1 }}
             />
           </>
         )}
@@ -214,7 +221,7 @@ export default function Projects() {
   const [activeTab, setActiveTab] = useState('All');
   const [isChanging, setIsChanging] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [comboMultiplier, setComboMultiplier] = useState(1);
   const [lastClickTime, setLastClickTime] = useState(0);
   const { addXP, incrementCombo, setPowerUp, powerUps } = useXP();
@@ -249,7 +256,13 @@ export default function Projects() {
     setTimeout(() => setIsChanging(false), 300);
   };
 
-  const handleProjectClick = (projectId: string) => {
+  const handleProjectClick = (projectId: number) => {
+    if (selectedProject === projectId) {
+      setSelectedProject(null);
+    } else {
+      setSelectedProject(projectId);
+    }
+    
     setIsClicking(true);
     setTimeout(() => setIsClicking(false), 400);
     
@@ -261,8 +274,6 @@ export default function Projects() {
     }
     setLastClickTime(now);
 
-    setSelectedProject(prev => prev === projectId ? null : projectId);
-    
     // Enhanced XP rewards
     incrementCombo();
     const baseXP = 200; // Increased base XP
@@ -271,7 +282,7 @@ export default function Projects() {
 
     // Increased power-up chance (30%)
     if (Math.random() < 0.3) {
-      const powerUpTypes = Object.keys(powerUps);
+      const powerUpTypes = Object.keys(powerUps) as Array<keyof typeof powerUps>;
       const randomPowerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
       setPowerUp(randomPowerUp);
     }

@@ -26,7 +26,7 @@ export default function Skills() {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [isClicking, setIsClicking] = useState(false);
-  const { addXP, incrementCombo, setPowerUp, powerUps } = useXP();
+  const { addXP, incrementCombo, setPowerUp, powerUps, combo } = useXP();
 
   const calculateLevel = (xp: number) => {
     return Math.floor(xp / 500) + 1;
@@ -42,9 +42,9 @@ export default function Skills() {
     incrementCombo();
     addXP(75); // Less XP than experience section
 
-    // Random chance to trigger power-up (15%)
-    if (Math.random() < 0.15) {
-      const powerUpTypes = Object.keys(powerUps);
+    // Random chance to trigger power-up (25%)
+    if (Math.random() < 0.25) {
+      const powerUpTypes = Object.keys(powerUps) as Array<keyof typeof powerUps>;
       const randomPowerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
       setPowerUp(randomPowerUp);
     }
@@ -79,14 +79,14 @@ export default function Skills() {
           </motion.h2>
 
           {/* Combo Counter */}
-          {incrementCombo > 0 && (
+          {combo > 0 && (
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
               className="absolute top-4 right-4 pixel-text text-[#00ff00] text-2xl animate-glitch"
             >
-              Combo x{incrementCombo}!
+              Combo x{combo}!
             </motion.div>
           )}
 
