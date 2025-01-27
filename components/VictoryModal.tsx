@@ -16,8 +16,14 @@ interface VictoryModalProps {
 
 const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps) => {
   const [showBossBattle, setShowBossBattle] = useState(false);
-  const achievements = getAchievements(stats);
-  const title = getAchievementTitle(stats);
+
+  // Format time into HH:MM:SS
+  const formatTime = (seconds: number) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   if (showBossBattle) {
     return (
@@ -35,27 +41,20 @@ const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps)
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          className="fixed inset-0 flex items-center justify-center z-[9999] bg-black/80"
         >
           <motion.div
-            className="relative bg-gray-900 p-8 rounded-lg pixel-border-lg max-w-2xl w-full mx-4"
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             exit={{ scale: 0, rotate: 180 }}
-            transition={{
-              type: "spring",
-              damping: 15,
-              stiffness: 100,
-              duration: 0.8
-            }}
+            className="pixel-border p-8 bg-black relative overflow-hidden"
           >
-            {/* Background Effects */}
-            <div className="absolute inset-0 overflow-hidden">
-              {/* Stars */}
-              {[...Array(20)].map((_, i) => (
+            {/* Background effects */}
+            <div className="absolute inset-0 opacity-30">
+              {Array.from({ length: 20 }).map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute w-2 h-2 bg-[#00ff00]"
@@ -69,7 +68,7 @@ const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps)
                   }}
                   transition={{
                     duration: 2,
-                    repeat: -1,
+                    repeat: Infinity,
                     delay: Math.random() * 2,
                   }}
                 />
@@ -89,7 +88,7 @@ const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps)
                 }}
                 transition={{
                   duration: 2,
-                  repeat: -1,
+                  repeat: Infinity,
                 }}
               >
                 CONGRATULATIONS!
@@ -101,151 +100,153 @@ const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps)
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                {title}
+                <p className="mb-4">You have achieved mastery in all skills!</p>
+                <p className="text-[#ffff00]">Now you have full experience.</p>
+                <p className="text-[#00ffff] mt-4">Happy Coding! 🚀</p>
               </motion.div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                {/* Time */}
-                <motion.div
-                  className="bg-black/50 p-4 rounded pixel-border"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    damping: 15,
-                    stiffness: 100,
-                    delay: 0.2
-                  }}
-                >
-                  <div className="text-[#00ff00] text-center">
-                    <motion.div 
-                      className="text-4xl mb-2"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 0.5,
-                        repeat: -1,
-                      }}
-                    >
-                      ⏱️
-                    </motion.div>
-                    <div className="text-sm">Time</div>
-                    <div className="text-2xl">{Math.floor(stats.timePlayed / 60)}:{(stats.timePlayed % 60).toString().padStart(2, '0')}</div>
-                  </div>
-                </motion.div>
+              {/* Stats Display */}
+              <motion.div
+                className="grid grid-cols-1 gap-4 mb-8 bg-black/50 p-4 pixel-border"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                <h3 className="text-[#ffff00] pixel-text text-xl mb-2 text-center">FINAL STATS</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-right text-[#00ff00] pixel-text">Total Clicks:</div>
+                  <motion.div 
+                    className="text-[#00ffff] pixel-text"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", delay: 1 }}
+                  >
+                    {stats.totalClicks}
+                    {stats.totalClicks > 1000 && 
+                      <motion.span 
+                        className="ml-2 text-[#ffff00]"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >
+                        🏆
+                      </motion.span>
+                    }
+                  </motion.div>
+                  
+                  <div className="text-right text-[#00ff00] pixel-text">Max Combo:</div>
+                  <motion.div 
+                    className="text-[#00ffff] pixel-text"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", delay: 1.2 }}
+                  >
+                    x{stats.maxCombo}
+                    {stats.maxCombo > 50 && 
+                      <motion.span 
+                        className="ml-2 text-[#ffff00]"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >
+                        ⚡
+                      </motion.span>
+                    }
+                  </motion.div>
+                  
+                  <div className="text-right text-[#00ff00] pixel-text">Time Played:</div>
+                  <motion.div 
+                    className="text-[#00ffff] pixel-text"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", delay: 1.4 }}
+                  >
+                    {formatTime(stats.timePlayed)}
+                    {stats.timePlayed > 3600 && 
+                      <motion.span 
+                        className="ml-2 text-[#ffff00]"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >
+                        💻
+                      </motion.span>
+                    }
+                  </motion.div>
+                </div>
 
-                {/* Clicks */}
-                <motion.div
-                  className="bg-black/50 p-4 rounded pixel-border"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    damping: 15,
-                    stiffness: 100,
-                    delay: 0.3
-                  }}
-                >
-                  <div className="text-[#00ff00] text-center">
-                    <motion.div 
-                      className="text-4xl mb-2"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 0.5,
-                        repeat: -1,
-                      }}
-                    >
-                      🖱️
-                    </motion.div>
-                    <div className="text-sm">Clicks</div>
-                    <div className="text-2xl">{stats.totalClicks}</div>
-                  </div>
-                </motion.div>
+                <div className="text-center mt-4">
+                  <motion.div
+                    className="text-[#ffff00] pixel-text"
+                    animate={{
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                    }}
+                  >
+                    {getAchievementTitle(stats)}
+                  </motion.div>
+                </div>
 
-                {/* Max Combo */}
-                <motion.div
-                  className="bg-black/50 p-4 rounded pixel-border"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    damping: 15,
-                    stiffness: 100,
-                    delay: 0.4
-                  }}
+                {/* Achievement Badges */}
+                <motion.div 
+                  className="grid grid-cols-3 gap-2 mt-4 justify-items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.6 }}
                 >
-                  <div className="text-[#00ff00] text-center">
-                    <motion.div 
-                      className="text-4xl mb-2"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 0.5,
-                        repeat: -1,
-                      }}
-                    >
-                      🔥
-                    </motion.div>
-                    <div className="text-sm">Max Combo</div>
-                    <div className="text-2xl">{stats.maxCombo}x</div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Achievements */}
-              <div className="space-y-4 mb-8">
-                <h3 className="text-[#00ff00] text-xl mb-4 text-center">Achievements Unlocked</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {achievements.map((achievement, index) => (
+                  {getAchievements(stats).map((achievement, index) => (
                     <motion.div
                       key={achievement.title}
-                      className="bg-black/50 p-4 rounded pixel-border flex items-center space-x-4"
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        type: "spring",
-                        damping: 15,
-                        stiffness: 100,
-                        delay: 0.5 + index * 0.1,
-                        duration: 0.5
-                      }}
+                      className="pixel-border p-2 bg-black/30"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 1.8 + index * 0.2 }}
                     >
-                      <motion.div
-                        className="text-4xl"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{
-                          duration: 2,
-                          repeat: -1,
-                          delay: index * 0.2
-                        }}
-                      >
-                        {achievement.icon}
-                      </motion.div>
-                      <div>
-                        <div className="text-[#00ff00] font-bold">{achievement.title}</div>
-                        <div className="text-[#00ff00]/80 text-sm">{achievement.description}</div>
+                      <div className="text-center">
+                        <motion.div
+                          className="text-2xl"
+                          animate={{ y: [0, -5, 0] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          {achievement.icon}
+                        </motion.div>
+                        <div className="text-[#00ff00] pixel-text text-xs mt-1">
+                          {achievement.title}
+                        </div>
                       </div>
                     </motion.div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              {/* Action Buttons */}
-              <div className="flex justify-center space-x-4">
+              {/* Buttons */}
+              <div className="flex justify-center gap-4">
                 <motion.button
-                  className="pixel-btn"
-                  onClick={onReset}
-                  whileHover={{ scale: 1.05 }}
+                  className="retro-button"
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                >
-                  Play Again
-                </motion.button>
-                <motion.button
-                  className="pixel-btn pixel-btn-primary"
                   onClick={() => setShowBossBattle(true)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  Challenge Boss
+                  [CHALLENGE THE BOSS]
+                </motion.button>
+
+                <motion.button
+                  className="retro-button"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onReset}
+                >
+                  [NEW GAME]
+                </motion.button>
+
+                <motion.button
+                  className="retro-button"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onClose}
+                >
+                  [EXIT GAME]
                 </motion.button>
               </div>
             </div>
@@ -257,88 +258,142 @@ const VictoryModal = ({ isVisible, onReset, onClose, stats }: VictoryModalProps)
 };
 
 // Helper functions for achievements
-function getAchievementTitle(stats: { totalClicks: number; maxCombo: number; timePlayed: number }) {
-  if (stats.maxCombo >= 50) return "Legendary Combo Master!";
-  if (stats.maxCombo >= 30) return "Elite Combo Warrior!";
-  if (stats.maxCombo >= 20) return "Skilled Combo Fighter!";
-  if (stats.totalClicks >= 1000) return "Dedicated Clicker!";
-  if (stats.totalClicks >= 500) return "Persistent Clicker!";
-  return "Victory Achieved!";
-}
+const getAchievementTitle = (stats: { totalClicks: number; maxCombo: number; timePlayed: number }) => {
+  const titles = [];
+  
+  if (stats.totalClicks > 1000) titles.push("Master Clicker 🏆");
+  if (stats.maxCombo > 50) titles.push("Combo Master ⚡");
+  if (stats.timePlayed > 3600) titles.push("Dedicated Developer 💻");
+  if (stats.totalClicks > 2000) titles.push("Click God 👑");
+  if (stats.maxCombo > 100) titles.push("Combo Legend 🌟");
+  
+  if (titles.length >= 3) {
+    return "Supreme Coding Master! 👑✨";
+  } else if (titles.length >= 2) {
+    return "Legendary Coder! 👑";
+  } else if (titles.length === 1) {
+    return titles[0];
+  }
+  return "Code Warrior! ⚔️";
+};
 
-function getAchievements(stats: { totalClicks: number; maxCombo: number; timePlayed: number }) {
+const getAchievements = (stats: { totalClicks: number; maxCombo: number; timePlayed: number }) => {
   const achievements = [];
 
   // Click-based achievements
-  if (stats.totalClicks >= 100) {
+  if (stats.totalClicks > 2000) {
     achievements.push({
-      icon: "🖱️",
-      title: "Click Novice",
-      description: "Reached 100 clicks"
+      title: "Click God",
+      icon: "👑",
+      description: "Over 2000 clicks"
     });
   }
-  if (stats.totalClicks >= 500) {
+  if (stats.totalClicks > 1000) {
     achievements.push({
-      icon: "⚡",
-      title: "Click Warrior",
-      description: "Reached 500 clicks"
-    });
-  }
-  if (stats.totalClicks >= 1000) {
-    achievements.push({
-      icon: "🎯",
       title: "Click Master",
-      description: "Reached 1000 clicks"
+      icon: "🎯",
+      description: "Over 1000 clicks"
+    });
+  }
+  if (stats.totalClicks > 500) {
+    achievements.push({
+      title: "Quick Fingers",
+      icon: "👆",
+      description: "500+ clicks"
+    });
+  }
+  if (stats.totalClicks > 250) {
+    achievements.push({
+      title: "Click Apprentice",
+      icon: "🎮",
+      description: "250+ clicks"
     });
   }
 
   // Combo-based achievements
-  if (stats.maxCombo >= 10) {
+  if (stats.maxCombo > 100) {
     achievements.push({
-      icon: "🔥",
-      title: "Combo Starter",
-      description: "Reached 10x combo"
-    });
-  }
-  if (stats.maxCombo >= 20) {
-    achievements.push({
-      icon: "⚔️",
-      title: "Combo Fighter",
-      description: "Reached 20x combo"
-    });
-  }
-  if (stats.maxCombo >= 30) {
-    achievements.push({
-      icon: "🌟",
-      title: "Combo Warrior",
-      description: "Reached 30x combo"
-    });
-  }
-  if (stats.maxCombo >= 50) {
-    achievements.push({
-      icon: "👑",
       title: "Combo Legend",
-      description: "Reached 50x combo"
+      icon: "🌟",
+      description: "100+ combo chain"
+    });
+  }
+  if (stats.maxCombo > 50) {
+    achievements.push({
+      title: "Combo King",
+      icon: "⚡",
+      description: "50+ combo chain"
+    });
+  }
+  if (stats.maxCombo > 25) {
+    achievements.push({
+      title: "Chain Master",
+      icon: "🔗",
+      description: "25+ combo chain"
+    });
+  }
+  if (stats.maxCombo > 10) {
+    achievements.push({
+      title: "Combo Starter",
+      icon: "✨",
+      description: "10+ combo chain"
     });
   }
 
   // Time-based achievements
-  if (stats.timePlayed >= 60) {
+  if (stats.timePlayed > 7200) {
     achievements.push({
-      icon: "⏱️",
-      title: "Dedicated Player",
-      description: "Played for 1 minute"
+      title: "Code Veteran",
+      icon: "🏆",
+      description: "2+ hours played"
     });
   }
-  if (stats.timePlayed >= 180) {
+  if (stats.timePlayed > 3600) {
     achievements.push({
-      icon: "🏆",
-      title: "Endurance Master",
-      description: "Played for 3 minutes"
+      title: "Time Lord",
+      icon: "⌛",
+      description: "1+ hour played"
+    });
+  }
+  if (stats.timePlayed > 1800) {
+    achievements.push({
+      title: "Dedicated",
+      icon: "🎮",
+      description: "30+ mins played"
+    });
+  }
+  if (stats.timePlayed > 600) {
+    achievements.push({
+      title: "Getting Started",
+      icon: "🌱",
+      description: "10+ mins played"
+    });
+  }
+
+  // Special achievements
+  if (stats.totalClicks > 1000 && stats.maxCombo > 50 && stats.timePlayed > 3600) {
+    achievements.push({
+      title: "Supreme Master",
+      icon: "👨‍💻",
+      description: "Achieved mastery in all areas"
+    });
+  }
+  if (stats.maxCombo > stats.totalClicks * 0.1) {
+    achievements.push({
+      title: "Efficiency Expert",
+      icon: "📊",
+      description: "High combo to click ratio"
+    });
+  }
+  if (stats.totalClicks / stats.timePlayed > 2) {
+    achievements.push({
+      title: "Speed Demon",
+      icon: "⚡",
+      description: "Super fast clicking"
     });
   }
 
   return achievements;
-}
+};
 
 export default VictoryModal;

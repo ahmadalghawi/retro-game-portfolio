@@ -4,21 +4,12 @@ import { useState, useEffect } from 'react';
 import { experiences } from '../data/experienceData';
 import { useXP } from '../context/XPContext';
 
-type CollectibleType = 'xp' | 'powerup' | 'star';
-
-interface Collectible {
-  id: number;
-  x: number;
-  y: number;
-  type: CollectibleType;
-}
-
 const Experience = () => {
   const [selectedExp, setSelectedExp] = useState<string | null>(null);
   const [isClicking, setIsClicking] = useState(false);
   const [showTutorial, setShowTutorial] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [collectibles, setCollectibles] = useState<Collectible[]>([]);
+  const [collectibles, setCollectibles] = useState<Array<{ id: number; x: number; y: number; type: 'xp' | 'powerup' | 'star' }>>([]);
   const [portalActive, setPortalActive] = useState(false);
   const { addXP, incrementCombo, setPowerUp, powerUps, powerUp, combo } = useXP();
 
@@ -41,7 +32,7 @@ const Experience = () => {
 
     // Random chance to trigger power-up (20%)
     if (Math.random() < 0.2) {
-      const powerUpTypes = Object.keys(powerUps) as Array<keyof typeof powerUps>;
+      const powerUpTypes = Object.keys(powerUps);
       const randomPowerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
       setPowerUp(randomPowerUp);
     }
@@ -64,7 +55,7 @@ const Experience = () => {
           id: Date.now(),
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          type: (Math.random() < 0.6 ? 'xp' : Math.random() < 0.8 ? 'powerup' : 'star') as CollectibleType
+          type: Math.random() < 0.6 ? 'xp' : Math.random() < 0.8 ? 'powerup' : 'star'
         };
         setCollectibles(prev => [...prev.slice(-5), newCollectible]); // Keep max 6 collectibles
       }
@@ -74,7 +65,7 @@ const Experience = () => {
   }, []);
 
   // Handle collectible collection
-  const handleCollectibleClick = (collectible: Collectible) => {
+  const handleCollectibleClick = (collectible: typeof collectibles[0]) => {
     setCollectibles(prev => prev.filter(c => c.id !== collectible.id));
     
     switch (collectible.type) {
@@ -83,7 +74,7 @@ const Experience = () => {
         incrementCombo();
         break;
       case 'powerup':
-        const powerUpTypes = Object.keys(powerUps) as Array<keyof typeof powerUps>;
+        const powerUpTypes = Object.keys(powerUps);
         const randomPowerUp = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
         setPowerUp(randomPowerUp);
         break;
@@ -147,7 +138,7 @@ const Experience = () => {
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             initial={{ scale: 0 }}
             animate={{ scale: [0, 2, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            transition={{ duration: 3 }}
           >
             <div className="relative">
               <motion.div

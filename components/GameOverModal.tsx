@@ -40,8 +40,7 @@ const GameOverModal = ({ stats, onClose }: GameOverModalProps) => {
           }}
           transition={{
             duration: 2,
-            repeat: -1,
-            repeatType: "reverse" as const
+            repeat: Infinity,
           }}
         >
           GAME OVER

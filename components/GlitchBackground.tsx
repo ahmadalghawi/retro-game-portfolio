@@ -91,9 +91,8 @@ const GlitchBackground = () => {
             transition={{
               duration: glitch.duration,
               delay: glitch.delay,
-              repeat: -1,
-              repeatDelay: 3,
-              repeatType: "reverse" as const
+              repeat: Infinity,
+              repeatDelay: 3
             }}
             className={`absolute ${
               glitch.type === 'error' ? 'text-red-500' :

@@ -449,7 +449,7 @@ const Hero = () => {
             transition={{
               duration: isPlanePaused ? 0 : 10,
               ease: "linear",
-              repeat: isPlanePaused ? 0 : -1,
+              repeat: isPlanePaused ? 0 : Infinity,
               repeatDelay: 0
             }}
             onUpdate={(latest) => {
@@ -497,11 +497,7 @@ const Hero = () => {
                 <motion.div
                   className="absolute -left-1 top-1/2 w-6 h-2 bg-current transform -translate-y-1/2 origin-right"
                   animate={{ rotate: isPlanePaused ? 0 : [0, 360] }}
-                  transition={{ 
-                    duration: 0.1, 
-                    repeat: -1, 
-                    ease: "linear" 
-                  }}
+                  transition={{ duration: 0.1, repeat: Infinity, ease: "linear" }}
                 />
                 {/* Window */}
                 <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-black transform -translate-x-0 -translate-y-1/2 rounded-full" />

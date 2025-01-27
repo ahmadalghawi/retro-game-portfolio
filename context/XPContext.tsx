@@ -9,21 +9,18 @@ interface PowerUp {
   multiplier: number;
 }
 
-type PowerUpType = 'speed' | 'double' | 'chain' | 'critical' | 'pixel';
-
 interface XPContextType {
   xp: number;
   level: number;
   combo: number;
-  powerUp: PowerUpType | null;
+  powerUp: string | null;
   addXP: (amount: number) => void;
   incrementCombo: () => void;
-  setPowerUp: (type: PowerUpType | null) => void;
-  powerUps: Record<PowerUpType, PowerUp>;
+  setPowerUp: (type: string | null) => void;
+  powerUps: Record<string, PowerUp>;
 }
 
 const XPContext = createContext<XPContextType | undefined>(undefined);
-
 
 export const powerUps: Record<string, PowerUp> = {
   'speed': {
@@ -54,19 +51,40 @@ export const powerUps: Record<string, PowerUp> = {
     description: '3x XP chance!',
     multiplier: 3
   },
+  'rainbow': {
+    name: 'Rainbow Power',
+    duration: 12000,
+    color: 'rainbow',
+    description: 'All bonuses active!',
+    multiplier: 4
+  },
+  'time': {
+    name: 'Time Warp',
+    duration: 7000,
+    color: '#00ff99',
+    description: 'Slow motion effects!',
+    multiplier: 1.25
+  },
+  'ghost': {
+    name: 'Ghost Mode',
+    duration: 9000,
+    color: '#9966ff',
+    description: 'Special effects!',
+    multiplier: 1.75
+  },
   'pixel': {
     name: 'Pixel Perfect',
-    duration: 7000,
-    color: '#00ff00',
+    duration: 8000,
+    color: '#66ff33',
     description: 'Enhanced visuals!',
-    multiplier: 1.25
+    multiplier: 1.5
   }
 };
 
 export function XPProvider({ children }: { children: ReactNode }) {
   const [xp, setXP] = useState(0);
   const [combo, setCombo] = useState(0);
-  const [powerUp, setPowerUpState] = useState<PowerUpType | null>(null);
+  const [powerUp, setPowerUpState] = useState<string | null>(null);
 
   // Calculate level based on XP (every 1000 XP = 1 level)
   const level = Math.floor(xp / 1000) + 1;
@@ -102,7 +120,7 @@ export function XPProvider({ children }: { children: ReactNode }) {
     setCombo(prev => prev + 1);
   };
 
-  const setPowerUp = (type: PowerUpType | null) => {
+  const setPowerUp = (type: string | null) => {
     setPowerUpState(type);
   };
 

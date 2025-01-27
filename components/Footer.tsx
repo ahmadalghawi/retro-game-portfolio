@@ -136,7 +136,7 @@ const Footer = () => {
               animate={{ 
                 color: ['#00ff00', '#ff00ff', '#00ffff', '#00ff00'],
               }}
-              transition={{ duration: 4, repeat: -1, repeatType: "loop" as const }}
+              transition={{ duration: 4, repeat: Infinity }}
               onClick={scrollToTop}
               className="cursor-pointer hover:text-[#00ff00]/80"
             >

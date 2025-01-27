@@ -156,7 +156,7 @@ const MiniGames = () => {
               transition={{
                 duration: 10,
                 delay: i * 2,
-                repeat: -1,
+                repeat: Infinity,
                 ease: "linear"
               }}
             />
@@ -236,7 +236,7 @@ const MiniGames = () => {
             }}
             transition={{
               duration: 15 + Math.random() * 10,
-              repeat: -1,
+              repeat: Infinity,
               ease: "linear"
             }}
           >

@@ -72,8 +72,8 @@ const PowerUpEffect = ({ type, position, onCollect }: PowerUpEffectProps) => {
           scale: [1, 1.2, 1]
         }}
         transition={{
-          rotate: { duration: 2, repeat: -1, ease: "linear" },
-          scale: { duration: 1, repeat: -1 }
+          rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+          scale: { duration: 1, repeat: Infinity }
         }}
       >
         <div className="text-3xl">
