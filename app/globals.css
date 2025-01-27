@@ -1,0 +1,305 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --pixel-bg: #2a044a;
+  --pixel-border: #00ff00;
+  --pixel-text: #ffffff;
+  --pixel-highlight: #ff00ff;
+}
+
+body {
+  background-color: var(--pixel-bg);
+  color: var(--pixel-text);
+  font-family: 'Press Start 2P', cursive;
+  image-rendering: pixelated;
+}
+
+.pixel-border {
+  position: relative;
+  border: 4px solid var(--pixel-border);
+  box-shadow: 0 0 0 4px var(--pixel-bg),
+              0 0 0 8px var(--pixel-border);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.pixel-bg {
+  background: 
+    linear-gradient(rgba(42, 4, 74, 0.9), rgba(42, 4, 74, 0.9)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 0, 0.1) 2px,
+      rgba(0, 255, 0, 0.1) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 0, 0.1) 2px,
+      rgba(0, 255, 0, 0.1) 4px
+    );
+  animation: scroll-bg 15s linear infinite;
+}
+
+.retro-button {
+  background: #000;
+  border: 2px solid var(--pixel-border);
+  color: var(--pixel-border);
+  padding: 0.5em 1em;
+  position: relative;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  image-rendering: pixelated;
+}
+
+.retro-button:hover {
+  background: var(--pixel-border);
+  color: #000;
+}
+
+.retro-button::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: -4px;
+  bottom: -4px;
+  border: 2px solid var(--pixel-border);
+  transition: all 0.2s;
+}
+
+.retro-button:hover::after {
+  left: -6px;
+  right: -6px;
+  top: -6px;
+  bottom: -6px;
+}
+
+.pixel-text {
+  text-shadow: 
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  letter-spacing: 2px;
+}
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(0, 0, 0, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+.glitch-text {
+  animation: glitch 0.5s infinite;
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--pixel-highlight);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--pixel-border);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+.glitch-text-sm {
+  position: relative;
+  animation: glitch 500ms infinite;
+  font-family: monospace;
+}
+
+.glitch-text-sm::before,
+.glitch-text-sm::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text-sm::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text-sm::after {
+  left: -2px;
+  text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+  animation: glitch-anim2 1s infinite linear alternate-reverse;
+}
+
+/* 3D Card Effects */
+.preserve-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  perspective: 1000px;
+}
+
+.backface-hidden-back {
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backface-hidden-front {
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.transform-none {
+  transform: none !important;
+}
+
+/* Combo Animation */
+@keyframes comboFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(-40px); }
+}
+
+.combo-float {
+  animation: comboFloat 1s ease-out forwards;
+}
+
+@keyframes scroll-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes matrixRain {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  4.166666666666666% {
+    clip: rect(91px, 9999px, 43px, 0);
+  }
+  8.333333333333332% {
+    clip: rect(65px, 9999px, 59px, 0);
+  }
+  12.5% {
+    clip: rect(84px, 9999px, 37px, 0);
+  }
+  16.666666666666664% {
+    clip: rect(6px, 9999px, 75px, 0);
+  }
+  20.833333333333336% {
+    clip: rect(46px, 9999px, 21px, 0);
+  }
+  25% {
+    clip: rect(12px, 9999px, 23px, 0);
+  }
+  29.166666666666668% {
+    clip: rect(92px, 9999px, 9px, 0);
+  }
+  33.33333333333333% {
+    clip: rect(65px, 9999px, 71px, 0);
+  }
+  37.5% {
+    clip: rect(41px, 9999px, 98px, 0);
+  }
+  41.66666666666667% {
+    clip: rect(23px, 9999px, 77px, 0);
+  }
+  45.83333333333333% {
+    clip: rect(38px, 9999px, 2px, 0);
+  }
+  50% {
+    clip: rect(82px, 9999px, 54px, 0);
+  }
+  54.166666666666664% {
+    clip: rect(67px, 9999px, 92px, 0);
+  }
+  58.333333333333336% {
+    clip: rect(95px, 9999px, 3px, 0);
+  }
+  62.5% {
+    clip: rect(1px, 9999px, 53px, 0);
+  }
+  66.66666666666666% {
+    clip: rect(69px, 9999px, 42px, 0);
+  }
+  70.83333333333334% {
+    clip: rect(36px, 9999px, 98px, 0);
+  }
+  75% {
+    clip: rect(72px, 9999px, 67px, 0);
+  }
+  79.16666666666666% {
+    clip: rect(52px, 9999px, 27px, 0);
+  }
+  83.33333333333334% {
+    clip: rect(95px, 9999px, 42px, 0);
+  }
+  87.5% {
+    clip: rect(24px, 9999px, 85px, 0);
+  }
+  91.66666666666666% {
+    clip: rect(39px, 9999px, 31px, 0);
+  }
+  95.83333333333334% {
+    clip: rect(15px, 9999px, 93px, 0);
+  }
+  100% {
+    clip: rect(87px, 9999px, 21px, 0);
+  }
+}
