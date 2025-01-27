@@ -435,7 +435,10 @@ const AboutMe = () => {
   };
 
   return (
-    <section id="AboutMe" className="py-20 bg-black relative overflow-hidden">
+    <div 
+      className="min-h-screen bg-black text-white p-8 relative overflow-hidden"
+      onClick={handleBackgroundClick}
+    >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 opacity-10">
         <motion.div 
@@ -690,7 +693,7 @@ const AboutMe = () => {
           }}
         />
       </div>
-    </section>
+    </div>
   );
 };
 

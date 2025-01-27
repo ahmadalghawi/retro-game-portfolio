@@ -104,72 +104,29 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
   const monsterDesign = getMonsterDesign(skillName);
   const color = getMonsterColor();
 
-  const variants = {
-    idle: {
-      y: 0,
-      scale: 1,
-      rotate: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    },
-    hover: {
-      y: -10,
-      scale: 1.1,
-      rotate: 5,
-      transition: {
-        duration: 0.8,
-        ease: "easeInOut",
-        repeat: -1,
-        repeatType: "reverse" as const
-      }
-    },
-    attack: {
-      rotate: 15,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    },
-    defeated: {
-      opacity: 0,
-      scale: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut"
-      }
-    },
-    selected: {
-      scale: 1.1,
-      transition: {
-        duration: 0.5,
-        repeat: -1,
-        repeatType: "reverse" as const
-      }
+  const bounceAnimation = {
+    y: isHovered ? [-8, 0] : isSelected ? [-4, 0] : 0,
+    scale: isHovered ? [1, 1.15] : isSelected ? [1, 1.05] : 1,
+    rotate: isAttacking ? [0, -15, 15, 0] : isHovered ? [-5, 5] : 0,
+    transition: {
+      duration: isHovered ? 0.8 : 0.3,
+      ease: "easeInOut",
+      repeat: isHovered ? Infinity : 0,
+      repeatType: "reverse" as const
     }
   };
 
-  const glowVariants = {
-    idle: {
-      filter: `drop-shadow(0 0 10px ${color})`,
-      transition: {
-        duration: 0.4
-      }
-    },
-    hover: {
-      filter: `drop-shadow(0 0 20px ${color})`,
-      transition: {
-        duration: 0.4,
-        repeat: -1,
-        repeatType: "reverse" as const
-      }
-    },
-    selected: {
-      filter: `drop-shadow(0 0 20px ${color})`,
-      transition: {
-        duration: 0.4
-      }
+  const glowAnimation = {
+    filter: isHovered 
+      ? [`drop-shadow(0 0 15px ${color}) brightness(1.3)`, `drop-shadow(0 0 25px ${color}) brightness(1.6)`]
+      : isSelected
+      ? [`drop-shadow(0 0 20px ${color}) brightness(1.4)`]
+      : `drop-shadow(0 0 10px ${color})`,
+    transition: {
+      duration: 0.4,
+      repeat: isHovered ? Infinity : 0,
+      repeatType: "reverse" as const
+
     }
   };
 
@@ -209,9 +166,10 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
     >
       <motion.div 
         className="w-32 h-32 relative"
-        variants={glowVariants}
-        initial="idle"
-        animate={isHovered ? "hover" : isSelected ? "selected" : "idle"}
+        animate={{
+          ...glowAnimation,
+          ...defeatedAnimation
+        }}
       >
         {/* Particle effects */}
         {particles.map((particle) => (
@@ -292,7 +250,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
               animate={{
                 fillOpacity: isHovered ? [0.3, 0.6] : 0.3
               }}
-              transition={{ duration: 0.5, repeat: -1, repeatType: "reverse" as const }}
+              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" as const }}
             />
           </g>
 
@@ -313,7 +271,7 @@ const MonsterSprite = ({ skillName, level, isHovered, isSelected, isDefeated }: 
                 transition={{
                   duration: 0.8,
                   delay: i * 0.15,
-                  repeat: -1,
+                  repeat: Infinity,
                   repeatType: "reverse" as const
                 }}
               />

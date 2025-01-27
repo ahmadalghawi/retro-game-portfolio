@@ -60,7 +60,7 @@ const Experience = () => {
   useEffect(() => {
     const spawnInterval = setInterval(() => {
       if (Math.random() < 0.3) { // 30% chance to spawn
-        const newCollectible: Collectible = {
+        const newCollectible: { id: number; x: number; y: number; type: "xp" | "powerup" | "star" } = {
           id: Date.now(),
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,

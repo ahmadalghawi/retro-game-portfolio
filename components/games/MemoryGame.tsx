@@ -82,7 +82,7 @@ export const MemoryGame = ({ onScoreUpdate, onGameComplete }: MemoryGameProps) =
         // Match found
         setTimeout(() => {
           setCards(cards.map(card => 
-            card.tech === firstCard.tech ? { ...card, isMatched: true } : card
+            card.tech === firstCard?.tech ? { ...card, isMatched: true } : card
           ));
           setMatchedPairs(prev => prev + 1);
           setFlippedCards([]);

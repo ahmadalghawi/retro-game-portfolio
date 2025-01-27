@@ -24,7 +24,8 @@ interface XPContextType {
 
 const XPContext = createContext<XPContextType | undefined>(undefined);
 
-export const powerUps: Record<PowerUpType, PowerUp> = {
+
+export const powerUps: Record<string, PowerUp> = {
   'speed': {
     name: 'Speed Boost',
     duration: 5000,
@@ -80,7 +81,7 @@ export function XPProvider({ children }: { children: ReactNode }) {
 
   // Clear power-up after duration
   useEffect(() => {
-    if (powerUp) {
+    if (powerUp && powerUp in powerUps) {
       const timer = setTimeout(
         () => setPowerUpState(null),
         powerUps[powerUp].duration
@@ -91,7 +92,7 @@ export function XPProvider({ children }: { children: ReactNode }) {
 
   const addXP = (amount: number) => {
     const comboMultiplier = Math.max(1, combo * 0.5); // 50% extra per combo
-    const powerUpMultiplier = powerUp ? powerUps[powerUp].multiplier : 1;
+    const powerUpMultiplier = powerUp && powerUp in powerUps ? powerUps[powerUp].multiplier : 1;
     const totalXP = Math.round(amount * comboMultiplier * powerUpMultiplier);
     
     setXP(prev => prev + totalXP);

@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useXP } from '../context/XPContext';
 import MemoryGame from './games/MemoryGame';
 import SnakeGame from './games/SnakeGame';
 import CodeTypingGame from './games/CodeTypingGame';
+import styles from './MiniGames.module.css';
 
 // Achievement definitions
 const ACHIEVEMENTS = [
@@ -76,7 +77,7 @@ const MiniGames = () => {
   ];
 
   const checkAchievements = (gameId: string, score: number) => {
-    let newAchievements: typeof ACHIEVEMENTS[0][] = [];
+    const newAchievements: typeof ACHIEVEMENTS[0][] = [];
 
     if (gameId === 'memory' && score >= 1000) {
       newAchievements.push(ACHIEVEMENTS.find(a => a.id === 'memory_master')!);
@@ -115,28 +116,7 @@ const MiniGames = () => {
     setGameCompleted(true);
   };
 
-  const generateRetroElements = (count: number) => {
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      type: ['pacman', 'ghost', 'invader', 'coin'][Math.floor(Math.random() * 4)] as 'pacman' | 'ghost' | 'invader' | 'coin',
-      direction: Math.random() > 0.5 ? 'left' : 'right'
-    }));
-  };
-
-  const [retroElements] = useState(() => generateRetroElements(10));
-
-  // Retro element content
-  const getRetroContent = (type: 'pacman' | 'ghost' | 'invader' | 'coin') => {
-    switch (type) {
-      case 'pacman': return '◓';
-      case 'ghost': return '👻';
-      case 'invader': return '👾';
-      case 'coin': return '🪙';
-      default: return '';
-    }
-  };
+  
 
   return (
     <section id="MiniGames" className="py-32 bg-black relative overflow-hidden">
@@ -144,11 +124,7 @@ const MiniGames = () => {
       <div className="absolute inset-0 overflow-hidden">
         {/* Simple Gradient Background */}
         <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(45deg, #000000, #1a1a1a)',
-            opacity: 0.9
-          }}
+          className={`absolute inset-0 ${styles.gradientBackground}`}
         />
 
         {/* Subtle Grid Pattern */}
