@@ -17,8 +17,22 @@ const programmingJokes = [
   { setup: "What's a programmer's favorite hangout spot?", punchline: "The Foo Bar!" },
   { setup: "Why do programmers hate nature?", punchline: "It has too many bugs!" },
   { setup: "What's a Git expert's favorite beverage?", punchline: "Branch water!" },
-  { setup: "Why did the React component feel lost?", punchline: "Because it didn't know its state!" }
-];
+  { setup: "Why did the React component feel lost?", punchline: "Because it didn't know its state!" },
+  { setup: "Why do programmers prefer using Windows?", punchline: "Because they know how to crash!" },
+  { setup: "Why do programmers have a favorite coffee mug?", punchline: "Because it's a constant!" },
+  { setup: "Why did the programmer quit his job?", punchline: "Because he didn't get arrays!" },
+  { setup: "Why is the programmer's keyboard always broke?", punchline: "Because it's always getting pressed!" },
+  { setup: "Why did the programmer go to the gym?", punchline: "To pump up his code!" },
+  { setup: "Why did the programmer get kicked out of the bar?", punchline: "Because he was making too many null references!" },
+  { setup: "Why did the programmer go to the doctor?", punchline: "Because he had a virus!" },
+  { setup: "Why do programmers prefer dark mode?", punchline: "Because light attracts bugs!" },
+  { setup: "Why do programmers prefer using Windows?", punchline: "Because they know how to crash!" },
+  { setup: "Why did the programmer quit his job?", punchline: "Because he didn't get arrays!" },
+  { setup: "Why is the programmer's keyboard always broke?", punchline: "Because it's always getting pressed!" },
+  { setup: "Why did the programmer go to the gym?", punchline: "To pump up his code!" },
+  { setup: "Why did the programmer get kicked out of the bar?", punchline: "Because he was making too many null references!" },
+  { setup: "Why did the programmer go to the doctor?", punchline: "Because he had a virus!" },
+]
 
 const Hero = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
