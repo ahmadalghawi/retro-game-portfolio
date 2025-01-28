@@ -170,7 +170,7 @@ const Hero = () => {
               className="retro-button"
               onClick={startGame}
             >
-              START GAME
+              Hit The Code?!
             </button>
             <button 
               className="retro-button"
@@ -194,367 +194,330 @@ const Hero = () => {
       <div className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-[#00ff00]"></div>
       <div className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-[#00ff00]"></div>
 
-      {/* 16-bit Moon/Sun Navigation */}
-      <div className="relative flex flex-col items-center mt-32">
-        <motion.div
-          className="cursor-pointer"
-          onClick={handleNavClick}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          animate={{ 
-            rotate: isNavOpen ? 360 : 0,
-            scale: isNavOpen ? 1.1 : 1
-          }}
-          transition={{ 
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 0.5 }
-          }}
-        >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            {/* Main Orb */}
-            <div className="relative w-32 h-32">
-              {/* Base Circle */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#1a472a] to-[#2d6a4f]" />
-              
-              {/* Pixel Art Face */}
-              <div className="absolute inset-2 rounded-full bg-[#00fd00]">
-                {/* Pixel Details - 16-bit style face */}
-                <div className="absolute inset-0">
-                  {/* Left Eye */}
-                  <motion.div 
-                    className="absolute top-[35%] left-[30%] w-3 h-3 bg-[#1a472a]"
-                    animate={isNavOpen ? {
-                      clipPath: ['polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', 'polygon(0 0, 100% 0, 100% 100%, 0 100%)']
-                    } : {}}
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Right Eye */}
-                  <motion.div 
-                    className="absolute top-[35%] right-[30%] w-3 h-3 bg-[#1a472a]"
-                    animate={isNavOpen ? {
-                      clipPath: ['polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', 'polygon(0 0, 100% 0, 100% 100%, 0 100%)']
-                    } : {}}
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Smile */}
-                  <motion.div 
-                    className="absolute top-[55%] left-[35%] right-[35%] h-1 bg-[#1a472a]"
-                    animate={isNavOpen ? {
-                      height: 3,
-                      borderRadius: '0 0 4px 4px'
-                    } : {}}
-                  />
-                </div>
-              </div>
-
-              {/* Pixel Art Rays - Shows when active */}
-              {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute top-1/2 left-1/2 w-8 h-2 bg-[#50fa7b] origin-left"
-                  style={{
-                    rotate: `${i * 45}deg`,
-                    translateY: '-50%',
-                  }}
-                  animate={isNavOpen ? {
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 1, 0.5]
-                  } : { scale: 0, opacity: 0 }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.2
-                  }}
-                />
-              ))}
-
-              {/* Pixel Craters/Details */}
-              <div className="absolute inset-4">
-                {[...Array(6)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-2 h-2 rounded-full bg-[#2d6a4f]"
-                    style={{
-                      top: `${20 + Math.random() * 60}%`,
-                      left: `${20 + Math.random() * 60}%`,
-                    }}
-                    animate={isNavOpen ? {
-                      scale: [1, 1.2, 1],
-                      opacity: [0.5, 0.8, 0.5]
-                    } : {}}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.3
-                    }}
-                  />
+      {/* Retro Game Inventory Navigation */}
+      <motion.div 
+        className="absolute top-4 z-50 w-full"
+        animate={{ 
+          y: isNavOpen ? 40 : 0,
+        }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      >
+        <div className="flex justify-center px-4">
+          <motion.div
+            className="pixel-border bg-black/90 p-3 cursor-pointer relative overflow-hidden w-40"
+            onClick={handleNavClick}
+            whileHover={{ scale: 1.02 }}
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="grid grid-cols-4 gap-px">
+                {[...Array(16)].map((_, i) => (
+                  <div key={i} className="w-1 h-1 bg-[#00ff00]" />
                 ))}
               </div>
-
-              {/* Glowing Effect */}
-              <motion.div
-                className="absolute -inset-4 rounded-full"
-                animate={{
-                  boxShadow: isNavOpen 
-                    ? ['0 0 20px #50fa7b', '0 0 40px #50fa7b', '0 0 20px #50fa7b']
-                    : ['0 0 10px #50fa7b', '0 0 20px #50fa7b', '0 0 10px #50fa7b']
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
             </div>
-          </div>
+            
+            {/* Menu Text with Icon */}
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 relative">
+                <div className="absolute inset-0 border-2 border-[#00ff00] rotate-45" />
+                <div className="absolute inset-1 bg-[#00ff00]" />
+              </div>
+              <div className="text-[#00ff00] pixel-text font-bold tracking-wider">INVENTORY</div>
+            </div>
 
-          {/* Status Text */}
+            {/* Glowing Border Effect */}
+            <motion.div
+              className="absolute inset-0"
+              animate={{ 
+                boxShadow: isNavOpen 
+                  ? [
+                      "inset 0 0 0 #00ff00",
+                      "inset 0 0 10px #00ff00",
+                      "inset 0 0 0 #00ff00"
+                    ] 
+                  : "inset 0 0 0 #00ff00" 
+              }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          </motion.div>
+
+          <AnimatePresence>
+            {isNavOpen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="absolute top-full mt-4 w-full max-w-[90vw] md:max-w-fit"
+              >
+                <div className="pixel-border bg-black/90 p-4">
+                  {/* Grid Pattern Background */}
+                  <div className="absolute inset-0 opacity-5">
+                    <div className="grid grid-cols-12 gap-px">
+                      {[...Array(144)].map((_, i) => (
+                        <div key={i} className="w-1 h-1 bg-[#00ff00]" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Navigation Items */}
+                  <div className="relative flex flex-col md:flex-row gap-3">
+                    {navLinks.map((link) => (
+                      <motion.div
+                        key={link.id}
+                        className={`pixel-border-sm p-3 cursor-pointer relative overflow-hidden md:w-24
+                          ${selectedLink === link.id 
+                            ? 'bg-[#00ff00]/20' 
+                            : 'bg-black hover:bg-[#00ff00]/10'
+                          }`}
+                        onClick={() => handleLinkClick(link.id)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {/* Item Content */}
+                        <div className="flex md:flex-col items-center gap-3 md:gap-2">
+                          {/* Icon Container */}
+                          <div className="w-8 h-8 flex items-center justify-center relative">
+                            <div className="absolute inset-0 border border-[#00ff00]/30" />
+                            <span className="text-xl text-[#00ff00]">{link.icon}</span>
+                          </div>
+                          
+                          {/* Label */}
+                          <span className="pixel-text text-[#00ff00] text-xs font-bold text-center">{link.label}</span>
+                          
+                          {/* XP Badge */}
+                          <div className="absolute top-1 right-1 bg-[#00ff00]/10 px-1 rounded-sm">
+                            <span className="pixel-text text-[0.6rem] text-[#00ff00]">+{link.xp}</span>
+                          </div>
+                        </div>
+
+                        {/* Selection Indicator */}
+                        {selectedLink === link.id && (
+                          <motion.div
+                            className="absolute inset-0 border-2 border-[#00ff00]/30"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            layoutId="selection"
+                          />
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
+        <motion.div 
+          className="flex flex-col items-center gap-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          {/* Pixel Arrows */}
           <motion.div
-            className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold tracking-widest"
-            animate={{ 
-              color: isNavOpen ? '#50fa7b' : '#2d6a4f',
-              textShadow: isNavOpen ? '0 0 8px #50fa7b' : '0 0 8px #2d6a4f'
+            className="flex flex-col gap-[2px]"
+            animate={{ y: [0, 4, 0] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           >
-           
+            {/* First Arrow */}
+            <div className="flex justify-center space-x-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00]" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00]" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00]" />
+            </div>
+            <div className="flex justify-center space-x-[1px] -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-90" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-90" />
+            </div>
+            <div className="flex justify-center -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-80" />
+            </div>
+
+            {/* Second Arrow (Dimmer) */}
+            <div className="flex justify-center space-x-[1px] mt-1">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-60" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-60" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-60" />
+            </div>
+            <div className="flex justify-center space-x-[1px] -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-50" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-50" />
+            </div>
+            <div className="flex justify-center -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-40" />
+            </div>
+
+            {/* Third Arrow (Dimmest) */}
+            <div className="flex justify-center space-x-[1px] mt-1">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-30" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-30" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-30" />
+            </div>
+            <div className="flex justify-center space-x-[1px] -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-20" />
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-20" />
+            </div>
+            <div className="flex justify-center -mt-[1px]">
+              <div className="w-[3px] h-[3px] bg-[#00ff00] opacity-10" />
+            </div>
           </motion.div>
         </motion.div>
+      </div>
 
-        {/* Navigation Menu */}
-        <AnimatePresence>
-          {isNavOpen && (
-            <motion.div
-              className="mt-8"
-              initial={{ opacity: 0, scale: 0.8, y: -20 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                y: 0,
-                transition: {
-                  duration: 0.5,
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20
-                }
-              }}
-              exit={{ 
-                opacity: 0,
-                scale: 0.8,
-                y: -20,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <div className="bg-[#1a472a]/90 backdrop-blur-sm pixel-border p-4 relative overflow-hidden">
-                {/* Menu Background Animation */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[#50fa7b]/10 to-transparent"
-                  animate={{
-                    x: ['100%', '-100%']
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
+      {/* Scroll to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            onClick={scrollToTop}
+            className="fixed bottom-4 right-4 z-50 pixel-border-sm bg-black p-2 text-[#00ff00] hover:bg-[#00ff00]/20"
+            whileHover={{ scale: 1.1 }}
+          >
+            ↑
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Game Interface Modal */}
+      <AnimatePresence>
+        {showGame && (
+          <GameInterface onClose={() => setShowGame(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Contact Interface Modal */}
+      <AnimatePresence>
+        {showContact && (
+          <ContactInterface onClose={() => setShowContact(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Animated Plane with Banner */}
+      <div className="absolute top-52 left-0 right-0 h-20 overflow-visible pointer-events-none z-[25]">
+        <motion.div
+          className="relative w-full"
+          initial={{ x: "100%" }}
+          animate={{ x: currentX }}
+          style={{ x: planeX }}
+          transition={{
+            duration: isPlanePaused ? 0 : 10,
+            ease: "linear",
+            repeat: isPlanePaused ? 0 : Infinity,
+            repeatDelay: 0
+          }}
+          onUpdate={(latest) => {
+            planeX.set(String(latest.x));
+          }}
+        >
+          <div 
+            className="absolute right-0 flex items-center cursor-pointer pointer-events-auto group"
+            onClick={() => {
+              if (!isPlanePaused) {
+                // Stop the plane at current position
+                setIsPlanePaused(true);
+                const currentPosition = planeX.get();
+                setCurrentX(currentPosition);
                 
-                <div className="flex gap-4 justify-center relative">
-                  {navLinks.map((link, index) => (
-                    <motion.button
-                      key={link.id}
-                      className={`group relative px-6 py-3 text-sm pixel-border-sm
-                        ${selectedLink === link.id ? 'bg-[#50fa7b]/20' : 'hover:bg-[#50fa7b]/10'}`}
-                      onClick={() => handleLinkClick(link.id)}
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ 
-                        opacity: 1, 
-                        x: 0,
-                        transition: {
-                          duration: 0.3,
-                          delay: index * 0.1,
-                          type: "spring",
-                          stiffness: 100
-                        }
-                      }}
-                      whileHover={{ 
-                        scale: 1.1,
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <span className="text-2xl transform transition-transform group-hover:scale-110 group-hover:rotate-12">
-                          {link.icon}
-                        </span>
-                        <span className="text-xs font-bold tracking-wider">{link.label}</span>
-                      </div>
-                      
-                      {/* Hover Effect */}
-                      <motion.div
-                        className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100"
-                        initial={false}
-                        animate={{
-                          background: [
-                            'radial-gradient(circle at center, rgba(80,250,123,0.1) 0%, transparent 70%)',
-                            'radial-gradient(circle at center, rgba(80,250,123,0.2) 0%, transparent 70%)'
-                          ]
-                        }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      />
-                      
-                      {/* Selection Indicator */}
-                      <motion.div
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#50fa7b]"
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: selectedLink === link.id ? 1 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Back to Top Button */}
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 w-12 h-12 bg-black border-2 border-[#00fd00] text-[#00fd00] z-50 pixel-border-sm cursor-pointer hover:bg-[#00fd00]/10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <div className="relative w-full h-full">
-                {/* Pixel Art Arrow */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-0 h-0 border-l-[8px] border-l-transparent border-b-[12px] border-b-[#00fd00] border-r-[8px] border-r-transparent transform -translate-y-1" />
-                </div>
-                {/* Pixel Details */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-[#00fd00] transform translate-y-2" />
-              </div>
-            </motion.button>
-          )}
-        </AnimatePresence>
-
-        {/* Animated Plane with Banner */}
-        <div className="absolute top-32 left-0 right-0 h-20 overflow-visible pointer-events-none z-[25]">
-          <motion.div
-            className="relative w-full"
-            initial={{ x: "100%" }}
-            animate={{ x: currentX }}
-            style={{ x: planeX }}
-            transition={{
-              duration: isPlanePaused ? 0 : 10,
-              ease: "linear",
-              repeat: isPlanePaused ? 0 : Infinity,
-              repeatDelay: 0
-            }}
-            onUpdate={(latest) => {
-              planeX.set(String(latest.x));
+                // Show joke
+                const randomJoke = programmingJokes[Math.floor(Math.random() * programmingJokes.length)];
+                setCurrentJoke(randomJoke);
+                setShowJoke(true);
+                setShowPunchline(false);
+                
+                // Show punchline after 2 seconds
+                setTimeout(() => setShowPunchline(true), 2000);
+                
+                // Resume after 5 seconds
+                setTimeout(() => {
+                  setShowJoke(false);
+                  setIsPlanePaused(false);
+                  setCurrentX("-100%");
+                }, 5000);
+              }
             }}
           >
-            <div 
-              className="absolute right-0 flex items-center cursor-pointer pointer-events-auto group"
-              onClick={() => {
-                if (!isPlanePaused) {
-                  // Stop the plane at current position
-                  setIsPlanePaused(true);
-                  const currentPosition = planeX.get();
-                  setCurrentX(currentPosition);
-                  
-                  // Show joke
-                  const randomJoke = programmingJokes[Math.floor(Math.random() * programmingJokes.length)];
-                  setCurrentJoke(randomJoke);
-                  setShowJoke(true);
-                  setShowPunchline(false);
-                  
-                  // Show punchline after 2 seconds
-                  setTimeout(() => setShowPunchline(true), 2000);
-                  
-                  // Resume after 5 seconds
-                  setTimeout(() => {
-                    setShowJoke(false);
-                    setIsPlanePaused(false);
-                    setCurrentX("-100%");
-                  }, 5000);
-                }
-              }}
-            >
-              {/* Retro Pixel Plane */}
-              <div className={`relative w-20 h-20 text-[#00fd00] transform transition-transform ${isPlanePaused ? 'scale-110' : 'group-hover:scale-110'}`}>
-                {/* Plane Shadow */}
-                <div className="absolute top-1/2 left-1/2 w-12 h-4 bg-current/20 transform -translate-x-1/2 translate-y-4 blur-sm" />
-                {/* Plane Body */}
-                <div className="absolute top-1/2 left-1/2 w-16 h-6 bg-current transform -translate-x-1/2 -translate-y-1/2" />
-                {/* Wings */}
-                <div className="absolute top-1/2 left-1/2 w-6 h-12 bg-current transform -translate-x-1/2 -translate-y-1/2" />
-                {/* Tail */}
-                <div className="absolute top-1/4 right-0 w-4 h-8 bg-current" />
-                {/* Propeller */}
-                <motion.div
-                  className="absolute -left-1 top-1/2 w-6 h-2 bg-current transform -translate-y-1/2 origin-right"
-                  animate={{ rotate: isPlanePaused ? 0 : [0, 360] }}
-                  transition={{ duration: 0.1, repeat: Infinity, ease: "linear" }}
-                />
-                {/* Window */}
-                <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-black transform -translate-x-0 -translate-y-1/2 rounded-full" />
-              </div>
-              
-              {/* Banner */}
-              <div className="relative">
-                {/* Banner Rope */}
-                <div className="absolute -left-2 top-1/2 w-4 h-0.5 bg-[#00fd00] transform -translate-y-1/2" />
-                {/* Banner Content */}
-                <div className="ml-2 px-6 py-3 bg-black/90 text-[#00fd00] pixel-border-sm whitespace-nowrap transform group-hover:scale-105 transition-transform">
-                  <span className="text-sm font-bold tracking-wider">Click for a programmer joke! 🎯</span>
-                </div>
-              </div>
-
-              {/* Joke Speech Bubble */}
-              <AnimatePresence>
-                {showJoke && (
-                  <motion.div
-                    className="absolute -top-40 -left-20 bg-black/95 p-4 pixel-border-sm text-[#00fd00] min-w-[250px] max-w-[300px]"
-                    initial={{ scale: 0, opacity: 0, y: 20 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0, opacity: 0, y: 20 }}
-                  >
-                    {/* Speech Bubble Triangle */}
-                    <div className="absolute bottom-0 left-24 transform translate-y-[8px]">
-                      <div className="w-0 h-0 border-l-[8px] border-l-transparent border-t-[8px] border-t-[#00fd00] border-r-[8px] border-r-transparent" />
-                    </div>
-                    
-                    <div className="text-center space-y-2">
-                      <p className="text-sm">{currentJoke.setup}</p>
-                      <AnimatePresence>
-                        {showPunchline && (
-                          <motion.p
-                            className="text-base font-bold mt-2 text-[#00fd00]"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                          >
-                            {currentJoke.punchline}
-                          </motion.p>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            {/* Retro Pixel Plane */}
+            <div className={`relative w-20 h-20 text-[#00fd00] transform transition-transform ${isPlanePaused ? 'scale-110' : 'group-hover:scale-110'}`}>
+              {/* Plane Shadow */}
+              <div className="absolute top-1/2 left-1/2 w-12 h-4 bg-current/20 transform -translate-x-1/2 translate-y-4 blur-sm" />
+              {/* Plane Body */}
+              <div className="absolute top-1/2 left-1/2 w-16 h-6 bg-current transform -translate-x-1/2 -translate-y-1/2" />
+              {/* Wings */}
+              <div className="absolute top-1/2 left-1/2 w-6 h-12 bg-current transform -translate-x-1/2 -translate-y-1/2" />
+              {/* Tail */}
+              <div className="absolute top-1/4 right-0 w-4 h-8 bg-current" />
+              {/* Propeller */}
+              <motion.div
+                className="absolute -left-1 top-1/2 w-6 h-2 bg-current transform -translate-y-1/2 origin-right"
+                animate={{ rotate: isPlanePaused ? 0 : [0, 360] }}
+                transition={{ duration: 0.1, repeat: Infinity, ease: "linear" }}
+              />
+              {/* Window */}
+              <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-black transform -translate-x-0 -translate-y-1/2 rounded-full" />
             </div>
-          </motion.div>
-        </div>
+            
+            {/* Banner */}
+            <div className="relative">
+              {/* Banner Rope */}
+              <div className="absolute -left-2 top-1/2 w-4 h-0.5 bg-[#00fd00] transform -translate-y-1/2" />
+              {/* Banner Content */}
+              <div className="ml-2 px-6 py-3 bg-black/90 text-[#00fd00] pixel-border-sm whitespace-nowrap transform group-hover:scale-105 transition-transform">
+                <span className="text-sm font-bold tracking-wider">Click for a programmer joke! 🎯</span>
+              </div>
+            </div>
 
-        {/* XP System */}
-        <AnimatePresence>
-          {showGame && <GameInterface onClose={() => setShowGame(false)} />}
-          {showContact && <ContactInterface onClose={() => setShowContact(false)} />}
-        </AnimatePresence>
+            {/* Joke Speech Bubble */}
+            <AnimatePresence>
+              {showJoke && (
+                <motion.div
+                  className="absolute -top-32 -left-20 bg-black/95 p-4 pixel-border-sm text-[#00fd00] min-w-[250px] max-w-[300px]"
+                  initial={{ scale: 0, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0, opacity: 0, y: 20 }}
+                >
+                  {/* Speech Bubble Triangle */}
+                  <div className="absolute bottom-0 left-24 transform translate-y-[8px]">
+                    <div className="w-0 h-0 border-l-[8px] border-l-transparent border-t-[8px] border-t-[#00fd00] border-r-[8px] border-r-transparent" />
+                  </div>
+                  
+                  <div className="text-center space-y-2">
+                    <p className="text-sm">{currentJoke.setup}</p>
+                    <AnimatePresence>
+                      {showPunchline && (
+                        <motion.p
+                          className="text-base font-bold mt-2 text-[#00fd00]"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          {currentJoke.punchline}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
+
+      {/* XP System */}
+      <AnimatePresence>
+        {showGame && <GameInterface onClose={() => setShowGame(false)} />}
+        {showContact && <ContactInterface onClose={() => setShowContact(false)} />}
+      </AnimatePresence>
     </div>
   );
 };
