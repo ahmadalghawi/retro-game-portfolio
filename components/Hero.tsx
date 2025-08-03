@@ -2,9 +2,11 @@
 
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import GameInterface from './GameInterface';
+import Link from 'next/link';
+
 import ContactInterface from './ContactInterface';
 import RetroBackground from './RetroBackground';
+import PortfolioThemeSelector from './PortfolioThemeSelector';
 import { useXP } from '../context/XPContext';
 
 const programmingJokes = [
@@ -37,13 +39,13 @@ const programmingJokes = [
 const Hero = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [selectedLink, setSelectedLink] = useState<string | null>(null);
-  const [showGame, setShowGame] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [currentJoke, setCurrentJoke] = useState(programmingJokes[0]);
   const [showJoke, setShowJoke] = useState(false);
   const [showPunchline, setShowPunchline] = useState(false);
   const [isPlanePaused, setIsPlanePaused] = useState(false);
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
   const planeX = useMotionValue("100%");
   const [currentX, setCurrentX] = useState("100%");
 
@@ -95,10 +97,6 @@ const Hero = () => {
       setSelectedLink(null);
       setIsNavOpen(false);
     }, 1000);
-  };
-
-  const startGame = () => {
-    setShowGame(true);
   };
 
   const startContact = () => {
@@ -168,9 +166,15 @@ const Hero = () => {
           >
             <button 
               className="retro-button"
-              onClick={startGame}
+              onClick={() => {
+                console.log('Button clicked, current state:', showThemeSelector);
+                setShowThemeSelector(prev => {
+                  console.log('Setting new state to:', !prev);
+                  return !prev;
+                });
+              }}
             >
-              Hit The Code?!
+              {showThemeSelector ? 'Hide Themes' : 'Choose Theme'}
             </button>
             <button 
               className="retro-button"
@@ -318,6 +322,19 @@ const Hero = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
+          {/* Scroll Down Text */}
+          <motion.div
+            className="text-[#00ff00] text-xs font-mono mb-2 tracking-wider"
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            SCROLL DOWN
+          </motion.div>
+          
           {/* Pixel Arrows */}
           <motion.div
             className="flex flex-col gap-[2px]"
@@ -389,12 +406,7 @@ const Hero = () => {
         )}
       </AnimatePresence>
 
-      {/* Game Interface Modal */}
-      <AnimatePresence>
-        {showGame && (
-          <GameInterface onClose={() => setShowGame(false)} />
-        )}
-      </AnimatePresence>
+
 
       {/* Contact Interface Modal */}
       <AnimatePresence>
@@ -513,11 +525,72 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* XP System */}
+      {/* Portfolio Experience Header - Only show when theme selector is expanded */}
       <AnimatePresence>
-        {showGame && <GameInterface onClose={() => setShowGame(false)} />}
-        {showContact && <ContactInterface onClose={() => setShowContact(false)} />}
+        {showThemeSelector && (
+          <motion.div 
+            className="container mx-auto px-4 mt-24 text-center"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              className="inline-flex items-center gap-3 px-6 py-3 bg-black/80 pixel-border-sm mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="w-3 h-3 bg-[#00fd00] animate-pulse"></div>
+              <h2 className="text-xl font-bold text-[#00fd00] tracking-wider pixel-text">
+                CHOOSE YOUR PORTFOLIO EXPERIENCE
+              </h2>
+              <div className="w-3 h-3 bg-[#00fd00] animate-pulse"></div>
+            </motion.div>
+            <motion.p 
+              className="text-gray-300 text-sm max-w-2xl mx-auto mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Select from 8 unique creative interpretations of my professional profile. 
+              Each theme offers the same content with completely different visual experiences.
+            </motion.p>
+          </motion.div>
+        )}
       </AnimatePresence>
+
+      {/* Portfolio Theme Selector with Backdrop */}
+      <AnimatePresence>
+        {showThemeSelector && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => {
+              // Close if clicking on backdrop (not on the content)
+              if (e.target === e.currentTarget) {
+                console.log('Backdrop clicked, closing theme selector');
+                setShowThemeSelector(false);
+              }
+            }}
+          >
+            <div className="container mx-auto px-4 max-w-6xl" onClick={(e) => e.stopPropagation()}>
+              <PortfolioThemeSelector 
+                isExpanded={showThemeSelector}
+                onToggle={() => {
+                  console.log('Close button clicked');
+                  setShowThemeSelector(false);
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };

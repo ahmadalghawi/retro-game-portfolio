@@ -14,6 +14,23 @@ interface Experience {
 
 export const experiences: Experience[] = [
   {
+    id: 'Cognes',
+    title: 'FullStack Developer',
+    company: 'Cognes',
+    period: 'jan 2025 - Present',
+    startDate: '2025-01',
+    endDate: 'present',
+    type: 'fulltime',
+    description: [
+      'Developing web and mobile app development, specializing in React Native with Expo',
+      'Developing dashboard for Cognes',
+      'Developing AI tools for Cognes'
+    ],
+    skills: ['React Native', 'Expo', 'AI Tools', 'Full Stack Development'],
+    level: 5,
+    achievements: 3
+  },
+  {
     id: 'freelancer',
     title: 'FullStack Developer',
     company: 'Freelancer',
@@ -24,7 +41,11 @@ export const experiences: Experience[] = [
     description: [
       'Freelancing in web and mobile app development, specializing in React Native with Expo',
       'Leveraging AI tools like Bolt.new, Windsurf, and ChatGPT for innovative solutions',
-      'Delivering custom solutions for diverse client needs'
+      'Delivering custom solutions for diverse client needs',
+      'Delivered custom web/mobile apps using Next.js, React, and Expo',
+      'Built `cleenzi.com` – Car Washing Service',
+      'Built `StramEnergi.dk` – Clean energy platform  ',
+      'Built `syrexperts.com` – M connects skilled Syrian professionals worldwide ',
     ],
     skills: ['React Native', 'Expo', 'AI Tools', 'Full Stack Development'],
     level: 5,
