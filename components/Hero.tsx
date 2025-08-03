@@ -164,18 +164,38 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 1 }}
             className="flex flex-col md:flex-row justify-center gap-4"
           >
-            <button 
-              className="retro-button"
-              onClick={() => {
-                console.log('Button clicked, current state:', showThemeSelector);
-                setShowThemeSelector(prev => {
-                  console.log('Setting new state to:', !prev);
-                  return !prev;
-                });
-              }}
-            >
-              {showThemeSelector ? 'Hide Themes' : 'Choose Theme'}
-            </button>
+            {/* Animated CHOOSE THEME Button */}
+            <div className="relative group">
+              <button 
+                className="retro-button-special relative z-10 bg-black border-2 border-[#00ff00] text-[#00ff00] px-6 py-3 font-bold text-sm tracking-wider transition-all duration-300 hover:bg-[#00ff00] hover:text-black hover:shadow-[0_0_20px_#00ff00] transform hover:scale-105"
+                onClick={() => {
+                  console.log('Button clicked, current state:', showThemeSelector);
+                  setShowThemeSelector(prev => {
+                    console.log('Setting new state to:', !prev);
+                    return !prev;
+                  });
+                }}
+              >
+                {showThemeSelector ? 'HIDE THEMES' : 'CHOOSE THEME'}
+              </button>
+              
+              {/* Animated Border Effect */}
+              <div className="absolute inset-0 -m-1">
+                <div className="absolute inset-0 border-2 border-transparent bg-gradient-to-r from-[#f38282] via-[#ff0303] to-[#ff7300] rounded-sm animate-pulse"></div>
+                <div className="absolute inset-[2px] bg-black rounded-sm"></div>
+              </div>
+              
+              {/* Corner Animations */}
+              <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#00ff00] animate-ping"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#ff1e00] animate-ping" style={{animationDelay: '0.5s'}}></div>
+              <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#ec3b3b] animate-ping" style={{animationDelay: '1s'}}></div>
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#ec3b3b] animate-ping" style={{animationDelay: '1.5s'}}></div>
+              
+              {/* Scanning Line Effect */}
+              <div className="absolute inset-0 overflow-hidden rounded-sm">
+                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#00ff00] to-transparent animate-scan"></div>
+              </div>
+            </div>
             <button 
               className="retro-button"
               onClick={startContact}

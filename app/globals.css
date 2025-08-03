@@ -46,6 +46,25 @@ body {
   animation: scroll-bg 15s linear infinite;
 }
 
+/* Scanning Line Animation for CHOOSE THEME Button */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(400%);
+    opacity: 0;
+  }
+}
+
+.animate-scan {
+  animation: scan 2s ease-in-out infinite;
+}
+
 .retro-button {
   background: #000;
   border: 2px solid var(--pixel-border);
