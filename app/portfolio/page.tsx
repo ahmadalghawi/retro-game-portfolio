@@ -626,10 +626,10 @@ const DeveloperPlaygroundPortfolio = () => {
         </div>
         <div className="text-green-400 font-mono space-y-2">
           <div><span className="text-gray-500"># Contact Information</span></div>
-          <div><span className="text-cyan-400">EMAIL</span>=ahmad.alghawi@example.com</div>
+          <div><span className="text-cyan-400">EMAIL</span>=ahmadalghawi.86@gmail.com</div>
           <div><span className="text-cyan-400">GITHUB</span>=https://github.com/ahmadalghawi</div>
-          <div><span className="text-cyan-400">LINKEDIN</span>=https://linkedin.com/in/ahmad-alghawi</div>
-          <div><span className="text-cyan-400">LOCATION</span>=Jordan</div>
+          <div><span className="text-cyan-400">LINKEDIN</span>=https://www.linkedin.com/in/ahmad-alghawi-310722197/</div>
+          <div><span className="text-cyan-400">LOCATION</span>=Sweden</div>
           <div className="mt-6">
             <a
               href="/data/Rsume.pdf"
