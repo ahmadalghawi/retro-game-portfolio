@@ -70,7 +70,7 @@ const DeveloperPlaygroundPortfolio = () => {
         output = [
           'Ahmad Al-Ghawi',
           'Full Stack Developer',
-          'Location: Jordan',
+          'Location: Sweden',
           'Current Role: FullStack Developer at Cognes'
         ];
         break;
@@ -79,8 +79,8 @@ const DeveloperPlaygroundPortfolio = () => {
         output = [
           '=== AHMAD AL-GHAWI - RESUME ===',
           '',
-          '📧 Email: ahmad.alghawi@example.com',
-          '🌍 Location: Jordan',
+          '📧 Email: ahmadalghawi.86@gmail.com',
+          '🌍 Location: Sweden',
           '💼 Current: FullStack Developer at Cognes (Jan 2025 - Present)',
           '',
           '🎯 SUMMARY:',
@@ -179,10 +179,10 @@ const DeveloperPlaygroundPortfolio = () => {
         output = [
           '📧 CONTACT INFORMATION:',
           '',
-          '📧 Email: ahmad.alghawi@example.com',
+          '📧 Email: ahmadalghawi.86@gmail.com',
           '🐙 GitHub: https://github.com/ahmadalghawi',
-          '💼 LinkedIn: https://linkedin.com/in/ahmad-alghawi',
-          '🌍 Location: Jordan',
+          '💼 LinkedIn: https://www.linkedin.com/in/ahmad-alghawi-310722197/',
+          '🌍 Location: Sweden',
           '',
           '📄 Resume: Available for download in contact tab',
           '💬 Open to new opportunities and collaborations!'
